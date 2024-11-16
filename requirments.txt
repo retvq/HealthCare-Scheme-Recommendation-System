@@ -1,4 +1,12 @@
 notebook
-pandas
+pandas 
 numpy
+matpotlib 
+seaborn
+sentence-transformers 
+faiss-cpu
+openai
+flask
+fastapi
+sqlalchemy
 jupyter
