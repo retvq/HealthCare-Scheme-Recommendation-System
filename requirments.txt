@@ -1,6 +1,11 @@
 jupyter
 pandas
 numpy
+openpyxl
+faiss-cpu
+transformers 
+datasets  
+torch 
 scikit-learn
 matplotlib
 seaborn
@@ -10,4 +15,3 @@ openai
 flask
 fastapi
 sqlalchemy
-openpyxl
