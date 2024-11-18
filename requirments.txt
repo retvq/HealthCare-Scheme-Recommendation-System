@@ -8,7 +8,6 @@ sentence-transformers
 torch 
 chromadb
 requests
-wikipedia-api
 seaborn
 accelerate>=0.26.0
 datasets
@@ -19,3 +18,5 @@ openai
 flask
 fastapi
 sqlalchemy
+fuzzywuzzy
+python-Levenshtein
