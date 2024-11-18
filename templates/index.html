@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare RAG Model</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Healthcare RAG Model</h1>
+
+        <form id="categoryForm">
+            <label for="category_name">Enter Category Name:</label>
+            <input type="text" id="category_name" placeholder="e.g., Pregnancy">
+            <button type="submit">Analyze</button>
+        </form>
+
+        <div id="results" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const categoryName = document.getElementById('category_name').value.trim();
+            const resultsDiv = document.getElementById('results');
+
+            if (!categoryName) {
+                resultsDiv.style.display = 'block';
+                resultsDiv.textContent = 'Please enter a valid category name.';
+                return;
+            }
+
+            try {
+                const response = await fetch('/analyze-category', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ category_name: categoryName })
+                });
+                const data = await response.json();
+
+                if (data.error) {
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.textContent = data.error;
+                } else {
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.innerHTML = `
+                        <p>Matched Category: ${data.matched_category}</p>
+                        <p><img src="${data.graph_url}" alt="Trend Analysis Graph" style="max-width:100%;"></p>
+                    `;
+                }
+            } catch (err) {
+                resultsDiv.style.display = 'block';
+                resultsDiv.textContent = 'An error occurred while processing your request.';
+            }
+        });
+    </script>
+</body>
+</html>
